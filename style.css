@@ -1,0 +1,22 @@
+* {
+  position: relative;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin: 0px;
+  height: 100dvh;
+  width: 100dvw;
+  background-color: darkslategrey;
+}
+
+canvas {
+  margin: 0;
+  height: 100%;
+  aspect-ratio: 1;
+  background-color: black;
+}
