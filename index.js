@@ -5,7 +5,6 @@ const rec = canvas.getBoundingClientRect();
 canvas.height = rec.height;
 canvas.width = rec.width;
 const { height, width } = canvas;
-const depth = 10_000_0;
 
 const context = canvas.getContext("2d");
 
@@ -26,35 +25,42 @@ function drawRandom() {
   let i = 0;
   let position = {};
 
-  const interval = setInterval(() => {
-    const corner = Math.floor(Math.random() * 3);
-    if (corner === 0)
-      position = halfDistance(
-        lastVertex.x,
-        lastVertex.y,
-        triangle.top.x,
-        triangle.top.y
-      );
-    else if (corner === 1)
-      position = halfDistance(
-        lastVertex.x,
-        lastVertex.y,
-        triangle.left.x,
-        triangle.left.y
-      );
-    else
-      position = halfDistance(
-        lastVertex.x,
-        lastVertex.y,
-        triangle.right.x,
-        triangle.right.y
-      );
+  setInterval(() => {
+    for (let i = 0; i < 5; i++) {
+      const corner = Math.floor(Math.random() * 3);
+      if (corner === 0)
+        position = halfDistance(
+          lastVertex.x,
+          lastVertex.y,
+          triangle.top.x,
+          triangle.top.y
+        );
+      else if (corner === 1)
+        position = halfDistance(
+          lastVertex.x,
+          lastVertex.y,
+          triangle.left.x,
+          triangle.left.y
+        );
+      else
+        position = halfDistance(
+          lastVertex.x,
+          lastVertex.y,
+          triangle.right.x,
+          triangle.right.y
+        );
 
-    lastVertex = position;
-    drawPoint(lastVertex.x, lastVertex.y, "white");
-    if (i >= depth) clearInterval(interval);
-    i++;
+      lastVertex = position;
+      drawPoint(lastVertex.x, lastVertex.y, getRandomColor());
+    }
   });
+}
+
+function getRandomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r},${g},${b})`;
 }
 
 function halfDistance(x1, y1, x2, y2) {
