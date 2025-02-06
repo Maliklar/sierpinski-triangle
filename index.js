@@ -5,61 +5,68 @@ const rec = canvas.getBoundingClientRect();
 canvas.height = rec.height;
 canvas.width = rec.width;
 const { height, width } = canvas;
-
+const SIDES = 8;
 const context = canvas.getContext("2d");
 
-const triangle = drawTriangle();
+// const triangle = drawTriangle();
 const initialPoint = drawInitialPoint();
+const polygon = generatePolygonCorners(SIDES);
 drawRandom();
-function drawTriangle() {
-  context.fillStyle = "black";
-  const top = { x: width / 2, y: 0 };
-  const left = { x: 0, y: height };
-  const right = { x: width, y: height };
-  return { top, left, right };
+
+function generatePolygonCorners(sides) {
+  if (sides < 3) return new Error("Sides must be at least 3");
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = Math.min(width, height) / 2;
+  const angleStep = (2 * Math.PI) / sides;
+  const points = Array.from({ length: sides }, (_, i) => {
+    const angle = i * angleStep;
+    return {
+      x: centerX + radius * Math.cos(angle),
+      y: centerY + radius * Math.sin(angle),
+    };
+  });
+  context.beginPath();
+  context.strokeStyle = "white";
+  context.moveTo(points[0].x, points[0].y);
+  console.log(points);
+  for (let i = 1; i < points.length; i++)
+    context.lineTo(points[i].x, points[i].y);
+  context.closePath();
+  context.stroke();
+  return points;
 }
 
 function drawRandom() {
   let lastVertex = initialPoint;
 
-  let i = 0;
   let position = {};
 
   setInterval(() => {
-    for (let i = 0; i < 5; i++) {
-      const corner = Math.floor(Math.random() * 3);
-      if (corner === 0)
-        position = halfDistance(
-          lastVertex.x,
-          lastVertex.y,
-          triangle.top.x,
-          triangle.top.y
-        );
-      else if (corner === 1)
-        position = halfDistance(
-          lastVertex.x,
-          lastVertex.y,
-          triangle.left.x,
-          triangle.left.y
-        );
-      else
-        position = halfDistance(
-          lastVertex.x,
-          lastVertex.y,
-          triangle.right.x,
-          triangle.right.y
-        );
-
+    for (let i = 0; i < 100; i++) {
+      const corner = Math.floor(Math.random() * SIDES);
+      const c = polygon.at(corner);
+      position = halfDistance(lastVertex.x, lastVertex.y, c.x, c.y);
       lastVertex = position;
       drawPoint(lastVertex.x, lastVertex.y, getRandomColor());
     }
   });
 }
 
+function* nextColor() {
+  let i = 50;
+  while (true) {
+    i++;
+    if (i > 256) i = 50;
+    yield i;
+  }
+}
+const next = nextColor();
+
 function getRandomColor() {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
+  const r = next.next().value;
+  const g = next.next().value;
+  const b = next.next().value;
   return `rgb(${r},${g},${b})`;
 }
 
