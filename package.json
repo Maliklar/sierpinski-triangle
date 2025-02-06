@@ -17,6 +17,7 @@
     "@mui/material": "^6.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-pick-color": "^2.0.0",
     "scss": "^0.2.4",
     "zustand": "^5.0.3"
   },

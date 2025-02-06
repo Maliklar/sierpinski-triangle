@@ -1,9 +1,10 @@
 import { Box, Slider, Typography } from "@mui/material";
 import useCanvas from "../../store/useCanvas";
 import styles from "./styles.module.scss";
+import ColorPicker from "react-pick-color";
 
 export default function SideBar() {
-  const { setSides, sides, speed, setSpeed } = useCanvas();
+  const { setSides, sides, speed, setSpeed, color, setColor } = useCanvas();
   return (
     <aside className={styles.container}>
       <Box>
@@ -13,25 +14,35 @@ export default function SideBar() {
         <Slider
           defaultValue={3}
           min={3}
-          max={100}
+          max={10}
           onChange={(_, v) => {
             if (!isNaN(+v)) setSides(+v);
           }}
           valueLabelDisplay="auto"
         />
-
-        <Typography id="track-false-slider" gutterBottom>
-          Sides ({speed})
-        </Typography>
-        <Slider
-          defaultValue={1}
-          min={1}
-          max={1000}
-          onChange={(_, v) => {
-            if (!isNaN(+v)) setSpeed(+v);
-          }}
-          valueLabelDisplay="auto"
-        />
+        <Box>
+          <Typography id="track-false-slider" gutterBottom>
+            Speed ({speed})
+          </Typography>
+          <Slider
+            defaultValue={0}
+            min={1}
+            max={1000}
+            onChange={(_, v) => {
+              if (!isNaN(+v)) setSpeed(+v);
+            }}
+            valueLabelDisplay="auto"
+          />
+        </Box>
+        <Box>
+          <ColorPicker
+            color={color}
+            onChange={(color) => setColor(color.hex)}
+            hideAlpha
+            hideInputs
+          />
+          {color}
+        </Box>
       </Box>
     </aside>
   );
