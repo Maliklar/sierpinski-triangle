@@ -1,21 +1,41 @@
 * {
   position: relative;
   box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
   margin: 0px;
   height: 100dvh;
   width: 100dvw;
-  background-color: black;
+  background-color: #000;
 }
 
+.sidePanel {
+  flex: 1;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  box-shadow: 0px 0px 1rem white;
+  background-color: rgb(49, 46, 46);
+  padding: 1rem;
+  z-index: 2;
+  color: white;
+}
+
+.inputController {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.content {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
 canvas {
   margin: 0;
-  height: 100%;
-  aspect-ratio: 1;
+  width: 100%;
 }
