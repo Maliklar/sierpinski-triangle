@@ -14,7 +14,7 @@ export default function SideBar() {
         <Slider
           defaultValue={3}
           min={3}
-          max={10}
+          max={100}
           onChange={(_, v) => {
             if (!isNaN(+v)) setSides(+v);
           }}

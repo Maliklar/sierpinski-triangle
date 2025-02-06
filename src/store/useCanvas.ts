@@ -96,7 +96,7 @@ const useCanvas = create<CanvasStoreType>()((set, get) => ({
     };
     for (let i = 0; i < polygon.length; i++) {
       const { x, y } = polygon[i];
-      const clicked = isClick(x, y, clickPosition.x, clickPosition.y);
+      const clicked = isClick(x, y, clickPosition.x, clickPosition.y, 50);
       if (clicked) {
         set({ isMouseDown: true, targetPolygon: i });
         return;
@@ -132,7 +132,7 @@ const useCanvas = create<CanvasStoreType>()((set, get) => ({
     set({ color });
   },
   setSpeed(speed: number) {
-    set({ speed: speed });
+    set({ speed });
   },
 }));
 export default useCanvas;
